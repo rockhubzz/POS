@@ -7,7 +7,7 @@
         <ul>
             <li>Chicken Geprek</li>
             <li>Iced Tea</li>
-            <li>Milk, Eggs, Honey, Ginger</li>
+            <li>Milk, Eggs, Honey and Ginger</li>
         </ul>
     </body>
 </html>

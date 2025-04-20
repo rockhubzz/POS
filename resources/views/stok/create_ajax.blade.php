@@ -22,7 +22,10 @@
                     <input type="number" name="stok_jumlah" id="stok_jumlah" class="form-control" required>
                     <small id="error-stok_jumlah" class="error-text form-text text-danger"></small>
                 </div>
-                <div class="form-group">
+                <select name="user_id" id="user_id" hidden>
+                    <option value="{{ Auth::user()->user_id }}" selected>{{ Auth::user()->name }}</option>
+                </select>
+                                {{-- <div class="form-group">
                     <label>User</label>
                     <select name="user_id" id="user_id" class="form-control" required>
                         <option value="">- Pilih User -</option>
@@ -31,7 +34,7 @@
                         @endforeach
                     </select>
                     <small id="error-user_id" class="error-text form-text text-danger"></small>
-                </div>
+                </div> --}}
                 <div class="form-group">
                     <label>Supplier</label>
                     <select name="supplier_id" id="supplier_id" class="form-control" required>

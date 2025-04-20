@@ -98,10 +98,10 @@
                 <th>No</th>
                 <th>Kode Penjualan</th>
                 <th>Pembeli</th>
-                <th>Total</th>
                 <th>Tanggal</th>
                 <th>User</th>
                 <th>Detail Barang</th>
+                <th>Total</th>
             </tr>
         </thead>
         <tbody>
@@ -110,7 +110,6 @@
                     <td>{{ $i + 1 }}</td>
                     <td>{{ $item->penjualan_kode }}</td>
                     <td>{{ $item->pembeli }}</td>
-                    <td>{{'Rp ' . number_format($item->total_penjualan) }}</td>
                     <td>{{ $item->penjualan_tanggal }}</td>
                     <td>{{ $item->user->nama ?? '-' }}</td>
                     <td>
@@ -119,14 +118,15 @@
                                 @foreach ($item->detail as $d)
                                     <li>
                                         {{ $d->barang->barang_nama ?? 'Barang tidak ditemukan' }} -
-                                        {{ $d->jumlah }} x {{ number_format($d->harga) }}
+                                        {{ '(' . $d->jumlah }} @ {{ number_format($d->barang->harga_jual, 0, ',', '.') . '): ' }} {{ number_format($d->harga, 0, ',', '.') }}
                                     </li>
                                 @endforeach
                             </ul>
                         @else
                             Tidak ada detail
-                        @endif
-                    </td>
+                            @endif
+                        </td>
+                        <td>{{'Rp ' . number_format($item->total_penjualan, 0, ',', '.') }}</td>
                 </tr>
             @endforeach
         </tbody>

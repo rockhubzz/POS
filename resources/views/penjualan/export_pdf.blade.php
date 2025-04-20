@@ -1,7 +1,7 @@
+<!DOCTYPE html>
 <html>
-
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Data Penjualan</title>
     <style>
         body {
             font-family: "Times New Roman", Times, serif;
@@ -73,7 +73,6 @@
         }
     </style>
 </head>
-
 <body>
     <table class="border-bottom-header">
         <tr>
@@ -91,29 +90,46 @@
             </td>
         </tr>
     </table>
-    <h3 class="text-center">LAPORAN DATA BARANG</h4>
-        <table class="border-all">
-            <thead>
-                <tr>
-                    <th class="text-center">No</th>
-                    <th>Kode Penjualan</th>
-                    <th>Nama Pembeli</th>
-                    <th>Tanggal Penjualan</th>
-                    <th>Total Penjualan</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($penjualan as $p)
-                    <tr>
-                        <td class="text-center">{{ $loop->iteration }}</td>
-                        <td>{{ $p->penjualan_kode }}</td>
-                        <td>{{ $p->pembeli }}</td>
-                        <td>{{ $p->penjualan_tanggal}}</td>
-                        <td>{{ $p->detail->harga }}</td>
-                    </tr>
-                @endforeach
-            </tbody>
-        </table>
-</body>
 
+    <h3 class="text-center">LAPORAN DATA PENJUALAN</h3>
+    <table class="border-all font-10">
+        <thead>
+            <tr>
+                <th>No</th>
+                <th>Kode Penjualan</th>
+                <th>Pembeli</th>
+                <th>Total</th>
+                <th>Tanggal</th>
+                <th>User</th>
+                <th>Detail Barang</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach ($penjualan as $i => $item)
+                <tr>
+                    <td>{{ $i + 1 }}</td>
+                    <td>{{ $item->penjualan_kode }}</td>
+                    <td>{{ $item->pembeli }}</td>
+                    <td>{{'Rp ' . number_format($item->total_penjualan) }}</td>
+                    <td>{{ $item->penjualan_tanggal }}</td>
+                    <td>{{ $item->user->nama ?? '-' }}</td>
+                    <td>
+                        @if ($item->detail->count())
+                            <ul style="margin: 0; padding-left: 15px;">
+                                @foreach ($item->detail as $d)
+                                    <li>
+                                        {{ $d->barang->barang_nama ?? 'Barang tidak ditemukan' }} -
+                                        {{ $d->jumlah }} x {{ number_format($d->harga) }}
+                                    </li>
+                                @endforeach
+                            </ul>
+                        @else
+                            Tidak ada detail
+                        @endif
+                    </td>
+                </tr>
+            @endforeach
+        </tbody>
+    </table>
+</body>
 </html>

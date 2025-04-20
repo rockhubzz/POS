@@ -430,11 +430,10 @@ public function export_excel()
 
     public function export_pdf()
     {
-        $penjualan = PenjualanModel::select('user_id', 'pembeli', 'penjualan_kode', 'penjualan_tanggal')
-            ->orderBy('penjualan_tanggal')
-            ->with('user')
-            ->get();
-
+        $penjualan = PenjualanModel::with(['user', 'detail.barang'])
+        ->orderBy('penjualan_tanggal')
+        ->get();
+        
         $pdf = Pdf::loadView('penjualan.export_pdf', ['penjualan' => $penjualan]);
         $pdf->setPaper('a4', 'portrait');
         $pdf->setOption("isRemoteEnabled", true);

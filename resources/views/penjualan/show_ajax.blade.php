@@ -9,7 +9,7 @@
                 <tr><th>Kode</th><td>{{ $penjualan->penjualan_kode }}</td></tr>
                 <tr><th>Pembeli</th><td>{{ $penjualan->pembeli }}</td></tr>
                 <tr><th>Tanggal</th><td>{{ $penjualan->penjualan_tanggal }}</td></tr>
-                <tr><th>Total Penjualan</th><td>{{ number_format($penjualan->total_penjualan, 0, ',', '.') }}</td></tr>
+                <tr><th>Total Penjualan</th><td>{{ 'Rp ' . number_format($penjualan->total_penjualan, 0, ',', '.') }}</td></tr>
             </table>
             <h5 class="mt-4">Detail Barang</h5>
             <table class="table table-bordered table-sm">

@@ -7,6 +7,8 @@ use App\Models\BarangModel;
 use App\Models\SupplierModel;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Facades\DB;
+
 
 class StokModel extends Model
 {
@@ -37,4 +39,20 @@ class StokModel extends Model
     {
         return $this->belongsTo(SupplierModel::class, 'supplier_id', 'supplier_id');
     }
+
+    public static function getLowestStockItems($limit = 5)
+    {
+        return self::select(
+            't_stok.barang_id',
+            'm_barang.barang_nama',
+            'm_barang.barang_kode',
+            DB::raw('SUM(t_stok.stok_jumlah) as total_stok')
+        )
+        ->join('m_barang', 't_stok.barang_id', '=', 'm_barang.barang_id')
+        ->groupBy('t_stok.barang_id', 'm_barang.barang_nama', 'm_barang.barang_kode')
+        ->havingRaw('SUM(t_stok.stok_jumlah) < 20')
+        ->orderBy('total_stok', 'asc')
+        ->limit(5)
+        ->get();
+        }
 }
